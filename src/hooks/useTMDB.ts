@@ -8,8 +8,11 @@ import type {
   TrendingResponse,
   SearchResponse,
   APIState,
+  Genre,
+  Network,
 } from '@/types/tmdb';
 import * as api from '@/utils/api';
+import type { DiscoverTVParams } from '@/utils/api';
 
 /**
  * Generic hook for API requests with loading and error states
@@ -293,4 +296,62 @@ export function useInfiniteScroll<T>(
     loadMore,
     reset,
   };
+}
+
+/**
+ * Hook for discovering TV shows with advanced filtering
+ */
+export function useDiscoverTVShows(params: DiscoverTVParams): APIState<TMDBResponse<TVShow>> & {
+  refetch: () => void;
+} {
+  const [state, setState] = useState<APIState<TMDBResponse<TVShow>>>({
+    data: null,
+    loading: false,
+    error: null,
+  });
+
+  const discover = useCallback(async (discoverParams: DiscoverTVParams) => {
+    setState(prev => ({ ...prev, loading: true, error: null }));
+
+    try {
+      const data = await api.discoverTVShows(discoverParams);
+      setState({ data, loading: false, error: null });
+    } catch (error) {
+      setState({
+        data: null,
+        loading: false,
+        error: error instanceof Error ? error.message : 'Discovery failed',
+      });
+    }
+  }, []);
+
+  const refetch = useCallback(() => {
+    discover(params);
+  }, [discover, params]);
+
+  useEffect(() => {
+    discover(params);
+  }, [discover, params]);
+
+  return { ...state, refetch };
+}
+
+/**
+ * Hook for fetching TV genres
+ */
+export function useTVGenres(): APIState<{ genres: Genre[] }> {
+  return useAPICall(
+    () => api.getTVGenres(),
+    []
+  );
+}
+
+/**
+ * Hook for fetching TV networks
+ */
+export function useTVNetworks(): APIState<TMDBResponse<Network>> {
+  return useAPICall(
+    () => api.getTVNetworks(),
+    []
+  );
 }

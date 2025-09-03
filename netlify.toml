@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[template.environment]
+  VITE_TMDB_API_KEY = "Your TMDB API Read Access Token"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+
+# SPA routing - redirect all routes to index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

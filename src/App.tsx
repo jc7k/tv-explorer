@@ -7,6 +7,7 @@ import { usePageLoadPerformance, useMemoryMonitor } from '@/hooks/usePerformance
 // Lazy load pages for code splitting
 const HomePage = lazy(() => import('@/pages/HomePage').then(module => ({ default: module.HomePage })))
 const ShowDetailPage = lazy(() => import('@/pages/ShowDetailPage').then(module => ({ default: module.ShowDetailPage })))
+const SearchResultsPage = lazy(() => import('@/pages/SearchResultsPage').then(module => ({ default: module.SearchResultsPage })))
 
 function App() {
   // Monitor page load and memory performance
@@ -24,6 +25,7 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/search" element={<SearchResultsPage />} />
           <Route path="/show/:id" element={<ShowDetailPage />} />
           <Route 
             path="*" 

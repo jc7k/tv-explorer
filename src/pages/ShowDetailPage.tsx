@@ -6,6 +6,7 @@ import { Carousel } from '@/components/Carousel';
 import { ShowCard } from '@/components/ShowCard';
 import { ShowDetailSkeleton } from '@/components/LoadingSkeleton';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { StreamingProviders } from '@/components/StreamingProviders';
 import { buildImageUrl } from '@/utils/imageUrl';
 import { formatDate, formatRuntime, formatRating } from '@/utils/formatters';
 import type { Cast, Season, TVShow } from '@/types/tmdb';
@@ -314,7 +315,7 @@ export function ShowDetailPage() {
   const { id } = useParams<{ id: string }>();
   const showId = id ? parseInt(id, 10) : null;
   
-  const { details, credits, similar, isLoading, hasError, errors } = useShowDetailData(showId);
+  const { details, credits, similar, watchProviders, isLoading, hasError, errors } = useShowDetailData(showId);
 
   // Loading state
   if (isLoading || !showId) {
@@ -354,6 +355,18 @@ export function ShowDetailPage() {
       id: 'cast',
       label: 'Cast',
       content: <CastTab credits={credits.data} />,
+    },
+    {
+      id: 'where-to-watch',
+      label: 'Where to Watch',
+      content: (
+        <div className="space-y-6">
+          <StreamingProviders 
+            watchProviders={watchProviders.data} 
+            region="US"
+          />
+        </div>
+      ),
     },
     {
       id: 'seasons',

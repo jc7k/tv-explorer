@@ -35,9 +35,7 @@ export function SearchBar({
     setSelectedIndex(-1);
     setShowResults(value.length > 0);
     
-    if (onSearch) {
-      onSearch(value);
-    }
+    onSearch?.(value);
   };
 
   // Handle keyboard navigation
@@ -92,14 +90,12 @@ export function SearchBar({
   const handleSubmit = () => {
     if (!query.trim()) return;
     
-    // Navigate to search results page or trigger search
+    // Navigate to search results page
     setShowResults(false);
     setSelectedIndex(-1);
     
-    // If there's a top result, navigate to it
-    if (suggestions.length > 0) {
-      handleSelectShow(suggestions[0]);
-    }
+    // Navigate to search results page with query
+    navigate(`/search?q=${encodeURIComponent(query.trim())}`);
   };
 
   // Clear search
@@ -109,9 +105,7 @@ export function SearchBar({
     setSelectedIndex(-1);
     inputRef.current?.focus();
     
-    if (onSearch) {
-      onSearch('');
-    }
+    onSearch?.('');
   };
 
   // Close results when clicking outside
@@ -283,7 +277,7 @@ export function SearchBar({
                     onClick={handleSubmit}
                     className="w-full text-center text-tmdb-secondary hover:text-white transition-colors duration-200"
                   >
-                    View all {searchResults.total_results} results
+                    View all {searchResults.total_results.toLocaleString()} results
                   </button>
                 </div>
               )}

@@ -7,6 +7,8 @@ import type {
   TMDBResponse,
   TrendingResponse,
   SearchResponse,
+  Genre,
+  Network,
 } from '@/types/tmdb';
 import { cachedFetch } from './cache';
 
@@ -112,6 +114,51 @@ export async function getOnTheAirTVShows(page: number = 1): Promise<TMDBResponse
 // Airing Today TV Shows
 export async function getAiringTodayTVShows(page: number = 1): Promise<TMDBResponse<TVShow>> {
   return fetchTMDB<TMDBResponse<TVShow>>(`/tv/airing_today?page=${page}`);
+}
+
+// Discover TV Shows with advanced filtering
+export interface DiscoverTVParams {
+  page?: number;
+  sort_by?: string;
+  'vote_average.gte'?: number;
+  'vote_average.lte'?: number;
+  with_genres?: string;
+  without_genres?: string;
+  'first_air_date.gte'?: string;
+  'first_air_date.lte'?: string;
+  with_networks?: string;
+  with_origin_country?: string;
+  with_original_language?: string;
+  timezone?: string;
+  'vote_count.gte'?: number;
+  with_status?: string;
+  with_type?: string;
+}
+
+export async function discoverTVShows(params: DiscoverTVParams = {}): Promise<TMDBResponse<TVShow>> {
+  const queryParams = new URLSearchParams();
+  
+  // Add each parameter to the query string
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') {
+      queryParams.append(key, value.toString());
+    }
+  });
+  
+  const queryString = queryParams.toString();
+  const endpoint = `/discover/tv${queryString ? `?${queryString}` : ''}`;
+  
+  return fetchTMDB<TMDBResponse<TVShow>>(endpoint, { ttl: 10 * 60 * 1000 }); // 10 minutes cache
+}
+
+// Get all TV genres
+export async function getTVGenres(): Promise<{ genres: Genre[] }> {
+  return fetchTMDB<{ genres: Genre[] }>('/genre/tv/list', { ttl: 24 * 60 * 60 * 1000 }); // 24 hours cache
+}
+
+// Get TV networks (popular ones)
+export async function getTVNetworks(): Promise<TMDBResponse<Network>> {
+  return fetchTMDB<TMDBResponse<Network>>('/network/popular', { ttl: 24 * 60 * 60 * 1000 }); // 24 hours cache
 }
 
 // Export the error class for external use
