@@ -1,0 +1,7 @@
+[project]
+name = "tv-explorer"
+version = "0.1.0"
+description = "A TV show explorer application with Context Engineering"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
