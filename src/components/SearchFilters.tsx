@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import type { Genre, Network } from '@/types/tmdb';
 import { useTVGenres, useTVNetworks } from '@/hooks/useTMDB';
 
 export interface SearchFilters {
