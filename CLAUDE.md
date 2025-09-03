@@ -15,10 +15,7 @@ source .venv/bin/activate  # Linux/Mac
 .venv\Scripts\activate     # Windows
 
 # Install dependencies (if using uv)
-uv pip install -r requirements.txt
-
-# Install dependencies (if using pip)
-pip install -r requirements.txt
+uv sync
 
 # Code quality checks
 ruff check . --fix        # Lint and auto-fix code style issues
@@ -533,3 +530,4 @@ archon:manage_task(
 - [ ] Basic functionality tested
 - [ ] Documentation updated if needed
 - Use Serena MCP to retrieve, edit, and refactor code by symbol—enabling Claude to perform precise, context-aware operations across the codebase.
+- use archon project ID 4fb4884b-e2a4-45dd-b4c5-a085e43fc4c4 to manage our tasks. Also consult archon for tmdb API documentation and examples
