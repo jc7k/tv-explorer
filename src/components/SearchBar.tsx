@@ -129,7 +129,7 @@ export function SearchBar({
     <div className={`relative w-full max-w-2xl ${className}`}>
       {/* Search input */}
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+        <div className="absolute inset-y-0 left-0 pl-3 sm:pl-4 flex items-center pointer-events-none">
           <svg 
             className="w-5 h-5 text-gray-400" 
             fill="none" 
@@ -154,11 +154,11 @@ export function SearchBar({
           onFocus={() => setShowResults(query.length > 0)}
           placeholder={placeholder}
           className="
-            w-full pl-12 pr-12 py-4
+            w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-3 sm:py-4
             bg-white/10 backdrop-blur-sm
             border border-white/20
             rounded-full
-            text-white placeholder-gray-400
+            text-sm sm:text-base text-white placeholder-gray-400
             focus:outline-none focus:ring-2 focus:ring-tmdb-secondary focus:border-transparent
             transition-all duration-200
           "
@@ -170,7 +170,7 @@ export function SearchBar({
         />
         
         {/* Loading indicator or clear button */}
-        <div className="absolute inset-y-0 right-0 pr-4 flex items-center">
+        <div className="absolute inset-y-0 right-0 pr-3 sm:pr-4 flex items-center">
           {isSearching && debouncedQuery ? (
             <div className="animate-spin rounded-full h-5 w-5 border-2 border-white/30 border-t-white" />
           ) : query ? (

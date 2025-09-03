@@ -22,7 +22,7 @@ export function ShowCard({ show, onClick, className = '' }: ShowCardProps) {
     <div 
       className={`
         group relative cursor-pointer
-        w-48 min-w-[12rem] 
+        w-36 sm:w-44 lg:w-48 min-w-[9rem] sm:min-w-[11rem] lg:min-w-[12rem]
         transition-all duration-300
         hover:scale-105 hover:z-10
         ${className}
@@ -35,17 +35,17 @@ export function ShowCard({ show, onClick, className = '' }: ShowCardProps) {
         <LazyImage
           src={getPosterUrl(show.poster_path, 'w342')}
           srcSet={generatePosterSrcSet(show.poster_path)}
-          sizes="(max-width: 640px) 185px, 342px"
+          sizes="(max-width: 480px) 144px, (max-width: 640px) 176px, (max-width: 1024px) 192px, 192px"
           alt={`${show.name} poster`}
-          className="w-full h-72 object-cover transition-all duration-300 group-hover:scale-110"
+          className="w-full h-48 sm:h-60 lg:h-72 object-cover transition-all duration-300 group-hover:scale-110"
           onLoad={handleImageLoad}
           loading="lazy"
           threshold={0.1}
           rootMargin="100px"
           placeholder={
-            <div className="w-full h-72 bg-gray-800 animate-pulse flex items-center justify-center">
+            <div className="w-full h-48 sm:h-60 lg:h-72 bg-gray-800 animate-pulse flex items-center justify-center">
               <svg 
-                className="w-12 h-12 text-gray-600" 
+                className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-gray-600" 
                 fill="currentColor" 
                 viewBox="0 0 20 20"
               >
@@ -58,9 +58,9 @@ export function ShowCard({ show, onClick, className = '' }: ShowCardProps) {
             </div>
           }
           fallback={
-            <div className="w-full h-72 bg-gradient-to-b from-gray-700 to-gray-800 flex flex-col items-center justify-center text-gray-400">
+            <div className="w-full h-48 sm:h-60 lg:h-72 bg-gradient-to-b from-gray-700 to-gray-800 flex flex-col items-center justify-center text-gray-400">
               <svg 
-                className="w-16 h-16 mb-2" 
+                className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 mb-2" 
                 fill="currentColor" 
                 viewBox="0 0 20 20"
               >

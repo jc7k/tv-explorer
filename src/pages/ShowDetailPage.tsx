@@ -19,59 +19,59 @@ function ShowHero({ show }: { show: any }) {
     <div className="relative">
       {/* Backdrop Image */}
       <div 
-        className="h-[70vh] bg-cover bg-center bg-no-repeat relative"
+        className="h-[60vh] sm:h-[65vh] lg:h-[70vh] bg-cover bg-center bg-no-repeat relative"
         style={{ 
           backgroundImage: `linear-gradient(to top, rgba(17, 24, 39, 1) 0%, rgba(17, 24, 39, 0.8) 40%, rgba(17, 24, 39, 0.4) 100%), url(${backdropUrl})`
         }}
       >
         {/* Content Container */}
-        <div className="absolute bottom-0 left-0 right-0 p-8">
+        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 lg:p-8">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col lg:flex-row items-start lg:items-end gap-8">
+            <div className="flex flex-col sm:flex-row lg:flex-row items-start sm:items-end lg:items-end gap-4 sm:gap-6 lg:gap-8">
               {/* Poster */}
               <div className="flex-shrink-0">
                 <img
                   src={posterUrl}
                   alt={show.name}
-                  className="w-48 lg:w-64 rounded-xl shadow-2xl"
+                  className="w-32 sm:w-40 lg:w-48 xl:w-64 rounded-lg sm:rounded-xl shadow-2xl"
                 />
               </div>
 
               {/* Info */}
-              <div className="flex-1 text-white">
-                <h1 className="text-4xl lg:text-6xl font-bold mb-4">{show.name}</h1>
+              <div className="flex-1 text-white min-w-0">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-6xl font-bold mb-2 sm:mb-3 lg:mb-4 leading-tight">{show.name}</h1>
                 {show.tagline && (
-                  <p className="text-xl text-gray-300 italic mb-6">{show.tagline}</p>
+                  <p className="text-sm sm:text-lg lg:text-xl text-gray-300 italic mb-3 sm:mb-4 lg:mb-6 line-clamp-2">{show.tagline}</p>
                 )}
                 
                 {/* Metadata */}
-                <div className="flex flex-wrap items-center gap-6 mb-6 text-gray-300">
-                  <div className="flex items-center gap-2">
-                    <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4 lg:gap-6 mb-4 sm:mb-5 lg:mb-6 text-gray-300 text-sm sm:text-base">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 fill-yellow-400" />
                     <span className="font-semibold">{formatRating(show.vote_average)}</span>
                   </div>
                   
                   {show.first_air_date && (
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-5 h-5" />
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
                       <span>{formatDate(show.first_air_date)}</span>
                     </div>
                   )}
                   
                   {show.episode_run_time?.length > 0 && (
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-5 h-5" />
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
                       <span>{formatRuntime(show.episode_run_time[0])}</span>
                     </div>
                   )}
                   
-                  <div className="flex items-center gap-2">
-                    <Users className="w-5 h-5" />
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <Users className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span>{show.number_of_seasons} Season{show.number_of_seasons !== 1 ? 's' : ''}</span>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <Globe className="w-5 h-5" />
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <Globe className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span>{show.status}</span>
                   </div>
                 </div>
@@ -383,14 +383,26 @@ export function ShowDetailPage() {
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-gray-900">
-        {/* Back Button */}
-        <div className="absolute top-8 left-8 z-10">
+        {/* Mobile-friendly Back Button */}
+        <div className="absolute top-4 left-4 sm:top-6 sm:left-6 lg:top-8 lg:left-8 z-10">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-black/50 backdrop-blur-sm text-white rounded-lg hover:bg-black/70 transition-all"
+            className="
+              inline-flex items-center gap-2 
+              px-3 py-2 sm:px-4 sm:py-2
+              bg-black/60 backdrop-blur-sm text-white 
+              rounded-lg sm:rounded-lg
+              hover:bg-black/80 active:bg-black/90
+              transition-all duration-200
+              touch-manipulation
+              text-sm sm:text-base
+              min-h-[44px] min-w-[44px] sm:min-h-[48px] sm:min-w-[48px]
+              justify-center sm:justify-start
+            "
+            aria-label="Go back to home"
           >
-            <ArrowLeft className="w-5 h-5" />
-            Back
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="hidden sm:inline">Back</span>
           </Link>
         </div>
 

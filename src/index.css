@@ -53,8 +53,64 @@
 @layer base {
   button:focus-visible,
   input:focus-visible,
-  a:focus-visible {
+  a:focus-visible,
+  [tabindex]:focus-visible {
     outline: 2px solid theme('colors.tmdb.secondary');
     outline-offset: 2px;
+    outline-style: solid;
+  }
+  
+  /* Enhanced mobile focus styles */
+  @media (max-width: 768px) {
+    button:focus-visible,
+    input:focus-visible,
+    a:focus-visible,
+    [tabindex]:focus-visible {
+      outline-width: 3px;
+      outline-offset: 3px;
+    }
+  }
+  
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    button:focus-visible,
+    input:focus-visible,
+    a:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 3px solid;
+      outline-color: Highlight;
+    }
+  }
+}
+
+/* Mobile accessibility utilities */
+@layer utilities {
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .touch-target-large {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  .skip-link {
+    @apply absolute -top-10 left-0 z-50 bg-gray-900 text-white px-4 py-2 rounded-md;
+    @apply focus:top-4 focus:left-4 transition-all duration-200;
+  }
+}
+
+/* Respect user motion preferences */
+@layer base {
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
